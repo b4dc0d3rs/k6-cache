@@ -1,4 +1,4 @@
-# k6utils
+# k6cache
 
 A bunch of random functions for k6 performance testing that I found missing, but useful in our work.
 
@@ -12,49 +12,49 @@ xk6 build v0.41.0 \
 
 # Use
 
-Just import:
+Import this:
 ```js
-import k6utils from 'k6/x/k6utils';
+import k6cache from 'k6/x/k6cache'
 ```
 
-## sleepMilliseconds
+## Default expiring cache
+Default cache has automatic expiry measured in seconds. There is one default cache that share the same expiry duration.
+
+Methods that share this cache have `Default` in the name.
+
+### Usage examples:
 ```js
-k6utils.sleepMilliseconds(666);
-```
-## CSV operator
-
-A native CSV operator that loads all CSV records to a map in memory. Empty lines are skipped. Header in the CSV file is mandatory for mapping purposes.
-
-```js
-const data = k6utils.load('data.csv', ',');
-data[0].csvColumnName;
-```
-
-### CSV random record
-Returns random record from the CSV map. Load
-```js
-const allRows = k6utils.load('data.csv', ',');
-
-// a row can be returned many times
-const oneRandomRow = k6utils.takeRandomRow();
-
-const row5 = k6utils.takeRowByIndex(4)
-
-// this method removes polled row from in-memory cache
-// each row is returned only once. The item is removed from in-memory cache before returning.
-const uniqueRandomRow = k6utils.pollRandomRow();
-```
-
-### Expiring cache
-There is one global in-memory cache that evicts KV set after pre-configured number of seconds since insertion passed.
-
-```js
-// configure it in setup method
+// Configure it in the setup method
 k6utils.createCacheWithExpiryInSeconds(1)
 
-// insert anything anytime
-k6utils.putToCache('key', 'value')
+// Insert anything anytime
+k6utils.putToDefaultCache('key', 'value')
 
-// get anywhere anytime, even in a different method
-k6utils.getFromCache('key')
+// Get anywhere anytime, even in a different method
+k6utils.getFromDefaultCache('key')
+
+k6utils.removeFromDefaultCache('key')
+```
+
+## Named caches
+`k6-cache` stores a map of caches. Each cache can have different autoexpiry duration.
+
+Use this when single expiry duration in the default cache is not enough.
+
+To create a named cache with expiry in seconds:
+```js
+k6cache.createWithExpiryInSeconds('cache_name', 1)
+```
+Named cache must be created before use. If not, an error will be thrown.
+
+To put key-value to the named cache:
+```js
+k6cache.putToCache("cache_name", "key", "value")
+```
+
+The same pattern applies when inserting and deleting from a named cache:
+```js
+k6cache.getFromCache("cache_name", "key")
+
+k6cache.removeFromCache("cache_name", "key")
 ```

@@ -8,14 +8,12 @@ export default function () {
   k6cache.createWithExpiryInSeconds('token', 1)
   k6cache.putToCache("token", "myToken", "value")
 
-  console.log(`Expecting key-value to expire, should be 'value', was: ${k6cache.getFromDefaultCache('key')}`)
-  console.log(`Expecting key-value to expire, should be 'value', was: ${k6cache.getFromCache('token', "myToken")}`)
+  console.log(`Expecting default key-value to expire, should be 'value', was: ${k6cache.getFromDefaultCache('key')}`)
+  console.log(`Expecting named key-value to expire, should be 'value', was: ${k6cache.getFromCache('token', "myToken")}`)
 
   sleep(2)
-  console.log(`Expecting key-value to expire, should be null: ${k6cache.getFromDefaultCache('key')}`)
-
-  sleep(2)
-  console.log(`Expecting key-value to expire, should be null: ${k6cache.getFromCache('token', "myToken")}`)
+  console.log(`Expecting default key-value to expire, should be null: ${k6cache.getFromDefaultCache('key')}`)
+  console.log(`Expecting named key-value to expire, should be null: ${k6cache.getFromCache('token', "myToken")}`)
   // true-false tests finished
 
   try {
