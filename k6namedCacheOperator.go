@@ -20,7 +20,7 @@ func (k6cache *K6Cache) CreateWithExpiryInSeconds(name string, durationInSeconds
 	}
 }
 
-func (k6cache *K6Cache) PutToCache(name string, key string, value string) error {
+func (k6cache *K6Cache) PutToNamedCache(name string, key string, value string) error {
 	namedCache := k6cache.caches[name]
 	if err := validateCacheExistence(name, namedCache); err != nil {
 		return err
@@ -30,7 +30,7 @@ func (k6cache *K6Cache) PutToCache(name string, key string, value string) error 
 	return nil
 }
 
-func (k6cache *K6Cache) GetFromCache(name string, key string) (interface{}, error) {
+func (k6cache *K6Cache) GetFromNamedCache(name string, key string) (interface{}, error) {
 	namedCache := k6cache.caches[name]
 	if err := validateCacheExistence(name, namedCache); err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (k6cache *K6Cache) GetFromCache(name string, key string) (interface{}, erro
 	return stringValue, nil
 }
 
-func (k6cache *K6Cache) RemoveFromCache(name string, key string) error {
+func (k6cache *K6Cache) RemoveFromNamedCache(name string, key string) error {
 	namedCache := k6cache.caches[name]
 	if err := validateCacheExistence(name, namedCache); err != nil {
 		return err
