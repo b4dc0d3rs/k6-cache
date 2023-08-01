@@ -4,10 +4,10 @@ A bunch of random functions for k6 performance testing that I found missing, but
 
 # Compile for development
 ```sh
-xk6 build v0.41.0 \
+xk6 build v0.45.0 \
   --with github.com/b4dc0d3rs/k6-cache=.
 
-./k6 run k6cache.js
+./k6 run k6caches.js
 ```
 
 # Use

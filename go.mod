@@ -2,7 +2,10 @@ module github.com/b4dc0d3rs/k6-cache
 
 go 1.19
 
-require go.k6.io/k6 v0.40.0
+require (
+	github.com/patrickmn/go-cache v2.1.0+incompatible
+	go.k6.io/k6 v0.40.0
+)
 
 require (
 	github.com/dlclark/regexp2 v1.7.0 // indirect
@@ -15,7 +18,6 @@ require (
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.24.0 // indirect
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
-	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/serenize/snaker v0.0.0-20201027110005-a7ad2135616e // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/afero v1.1.2 // indirect
